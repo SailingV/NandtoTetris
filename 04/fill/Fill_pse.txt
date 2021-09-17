@@ -1,0 +1,59 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/04/Fill.asm
+
+// Runs an infinite loop that listens to the keyboard input.
+// When a key is pressed (any key), the program blackens the screen,
+// i.e. writes "black" in every pixel;
+// the screen should remain fully black as long as the key is pressed. 
+// When no key is pressed, the program clears the screen, i.e. writes
+// "white" in every pixel;
+// the screen should remain fully clear as long as no key is pressed.
+
+rowb=0
+colb=0
+high = 16
+highcal = 512
+sc = screen
+temp = 0
+i=0	//초기화
+
+
+rowb=R0
+colb=R1	
+addrrm = screen+colb
+LOOPM:
+	temp = temp + highcal
+	i++
+	if i<rowb goto LOOPM
+addrrm = addrrm + temp
+i=0
+temp=0
+//addrrm = screen+colb+rowb*highcal 검은색 블록 초기 위치설정
+addr = addrrm
+addrmov = addr	//addr 백업값
+
+
+(START)
+if key != 0 then goto BLACK
+else then goto WHITE	//키를 누르면 BLACK으로 키를 누르지않으면 WHITE로 이동
+
+(BLACK)
+LOOPB:
+	RAM[addrmov] = -1
+	addrmov = addrmov+32
+	i++
+	if i<=high goto LOOPB	//화면에 정사각형 16*16 검은색 블록만들기
+	addr++
+	addrmov = addr	//검은색 블록 좌표 수평이동
+goto START
+
+(WHITE)
+LOOPW:
+	RAM[addrrm] = 0
+	addrrm = addrrm+1
+	i++
+	if i<highcal goto LOOPW	//검은색 블록을 흰색으로 만듬
+addrrm = addrrm - highcal + 1	//지우개용 좌표 초기화
+goto START
