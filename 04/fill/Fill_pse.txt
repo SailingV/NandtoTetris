@@ -36,8 +36,9 @@ addrmov = addr	//addr 백업값
 
 
 (START)
+if key == esc then goto END
 if key != 0 then goto BLACK
-else then goto WHITE	//키를 누르면 BLACK으로 키를 누르지않으면 WHITE로 이동
+else then goto WHITE	//esc키를 누르면 프로그램 종료, 그 이외의 키를 누르면 BLACK으로 키를 누르지않으면 WHITE로 이동
 
 (BLACK)
 LOOPB:
@@ -47,7 +48,8 @@ LOOPB:
 	if i<=high goto LOOPB	//화면에 정사각형 16*16 검은색 블록만들기
 	addr++
 	addrmov = addr	//검은색 블록 좌표 수평이동
-goto START
+i=0			//i 초기화
+goto START		//START로 돌아감
 
 (WHITE)
 LOOPW:
@@ -56,4 +58,5 @@ LOOPW:
 	i++
 	if i<highcal goto LOOPW	//검은색 블록을 흰색으로 만듬
 addrrm = addrrm - highcal + 1	//지우개용 좌표 초기화
+i=0				//i 초기화
 goto START
