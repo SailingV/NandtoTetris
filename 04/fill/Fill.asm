@@ -23,10 +23,10 @@ M=0	//colb=0
 D=A
 @high
 M=D	//high = 16
-@512
+@32
 D=A
 @highcal
-M=D	//highcal = 512
+M=D	//highcal = 32
 @SCREEN
 D=A
 @sc
@@ -83,6 +83,7 @@ M=M+D	//addrrm = screen+colb
 D=M
 @temp
 M=M+D
+D=M
 @addrrm
 M=D	//addrrm = addrrm + temp
 @i
