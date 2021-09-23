@@ -1,6 +1,6 @@
 CHIP JUMP {
     IN
-	j1, j2, j3, zr, ng;
+	j1, j2, j3, zr, ng, opcode;
     OUT
 	out;
 
@@ -11,5 +11,6 @@ CHIP JUMP {
     Not( in = npg, out = pg);
     And( a = pg, b = j3, out = r3);
     Or(a = r1, b = r2, out = rt);
-    Or(a = rt, b = r3, out = out);
+    Or(a = rt, b = r3, out = temp);
+    And( a=opcode, b=temp, out = out);
 }
