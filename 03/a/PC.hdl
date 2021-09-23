@@ -16,5 +16,12 @@ CHIP PC {
     OUT out[16];
 
     PARTS:
-    // Put your code here:
+    Mux16( a = oicmx, b = in, sel = load, out = omx);
+    Register( in = omx, load = true, out = org);
+    Inc16( in = oand, out = oic);
+    Not16( in[0] = reset, in[1] = reset, in[2] = reset, in[3] = reset, in[4] = reset, in[5] = reset, in[6] = reset, in[7] = reset, in[8] = reset, 
+	 in[9] = reset, in[10] = reset, in[11] = reset, in[12] = reset, in[13] = reset, in[14] = reset, in[15] = reset, out = nr16);
+    And16( a = org, b = nr16, out = oand);
+    And16( a = oand, b = true, out = out);
+    Mux16( a = oand, b = oic, sel = inc, out = oicmx);
 }
