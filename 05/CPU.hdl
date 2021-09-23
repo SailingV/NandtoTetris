@@ -39,12 +39,21 @@ CHIP CPU {
         pc[15];          // address of next instruction
 
     PARTS:
-    And16( a = instruction, b = 1, out[15] = opcd, out[12] = acd, out[11] = c1, out[10] = c2, out[9] = c3, 
-	out[8] = c4, out[7] = c5, out[6] = c6, out[5] = d1, out[4] = d2, out[3] = d3, out[2] = j1, out[1] = j2, out[0] = j3);
-    Mux16( a = instrucion, b = oalu, sel = opcd, out = ira);
-    Register( in = ira, load = d1, out = ora);
-    Register( in = oalu, load = d2, out = ord);
-    And( a = d3, b = 1, out = writeM);
-    Mux16( a = ora, b = inM, sel = acd out = omx);
-    ALU( x = ord, y = omx , zx = c1, nx = c2, zy = c3, ny = c4, f = c5, no = c6, out = oalu, zr = zr, ng = ng);
+    Not16(in=instruction, out=ninstruction);
+    Not16(in=ninstruction, out[15] = opcode, out[12] = ac, out[11] = c1, out[10] = c2, out[9] = c3, out[8] = c4, out[7] = c5,
+	out[6] = c6, out[5]=d1,out[4]=d2,out[3]=d3,out[2]=j1,out[1]=j2,out[0]=j3);	//C-instruction 분할
+    Mux16( a=instruction, b=outm, sel=opcode, out = ina);	//opcode :  a레지스터에 달려있는 mux의 c 0이면 a레지스터에 instruction 저장 1이면 outM을 Mux16으로 가져옴
+    ARegister( in=ina, load=d1, out = outa);
+    DRegister( in =outm, load=d2, out=outd);
+    Mux16( a=outa, b=inM, sel=ac, out = outmx);	//a : ALU와 물려있는 MUX의 c값 0이면 A레지스터값을 1이면 inM값을 ALU값으로 가져감 y = M or A
+    ALU(x=outd,y=outmx,zx=c1,nx=c2,zy=c3,ny=c4,f=c5,no=c6,out=outm,zr=zr,ng=ng);
+    PC(in=outa,load=inpc,inc=true,reset=reset,out[0..14]=pc);
+    JUMP(j1=j1, j2=j2, j3=j3, zr=zr, ng=ng, out=inpc);
+    And(a=opcode, b=d3, out=writeM);
+    Not16(in=outa, out=nouta);
+    Not16(in=nouta,out[0..14]=addressM);
+    Not16(in=outm,out=noutm);
+    Not16(in=noutm,out=outM);
+    
+    
 }

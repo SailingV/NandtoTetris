@@ -2,14 +2,14 @@ CHIP JUMP {
     IN
 	j1, j2, j3, zr, ng;
     OUT
-	pc;
+	out;
 
     PARTS:
     And( a = ng, b = j1, out = r1);
     And( a = zr, b = j2, out = r2);
-    Or( a = zr, b = ng, out = rn3);
-    Not( in = rn3, out = rt3);
-    And( a = rt3, b = j3, out = r3);
-    Or( a = r1, b = r2, out = temp1);
-    Or( a = r3, b = temp1, out = pc);
+    Or( a = ng, b = zr, out = npg);
+    Not( in = npg, out = pg);
+    And( a = pg, b = j3, out = r3);
+    Or(a = r1, b = r2, out = rt);
+    Or(a = rt, b = r3, out = out);
 }

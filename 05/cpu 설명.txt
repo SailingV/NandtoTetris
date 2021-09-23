@@ -1,0 +1,8 @@
+1 1 1 a c1 c2 c3 c4 c5 c6 d1 d2 d3 j1 j2 j3
+
+opcode :  a레지스터에 달려있는 mux의 c 0이면 a레지스터에 instruction 저장 1이면 outM을 Mux16으로 가져옴
+a : ALU와 물려있는 MUX의 c값 0이면 A레지스터값을 1이면 inM값을 ALU값으로 가져감 y = M or A
+c1~c6 : 차례대로 ALU의 zx, nx, ~no까지의 값, x = D, y = M or A
+d1~d3: 차례대로 A register D register , writeM의 load값
+j1~j3 : zr, ng과 조합하여 pc의 load값을 조정 jump칩으로 구현하였음
+
