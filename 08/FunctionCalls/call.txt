@@ -1,0 +1,57 @@
+@Returnpoint
+D=A
+@2
+D=A
+@nArgs
+M=D
+@SP
+AM=M+1
+A=A-1	
+M=D		//push returnAddress
+@LCL
+D=M
+@SP
+AM=M+1
+A=A-1
+M=D		//push LCL
+@ARG
+D=M
+@SP
+AM=M+1
+A=A-1
+M=D		//push ARG
+@THIS
+D=M
+@SP
+AM=M+1
+A=A-1
+M=D		//push THIS
+@THAT
+D=M
+@SP
+AM=M+1
+A=A-1
+M=D		//push THAT
+@SP
+D=M
+@5
+D=D-A
+@nArgs
+D=D-M
+@ARG
+M=D		//ARG = SP-5-nArgs
+@SP
+D=M
+@ARG
+M=D		//LCL = SP
+@function1
+0;jmp
+(Returnpoint)
+(END)
+@END
+0;JMP
+(function1)
+@temp1
+M=1
+@Returnpoint
+0;JMP
