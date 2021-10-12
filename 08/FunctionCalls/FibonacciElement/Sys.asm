@@ -21,7 +21,7 @@ AM=M+1
 A=A-1
 M=D
 //call Main.fibonacci 1
-@Main.fibonacci$ret.1
+@Sys.Main.fibonacci$ret.0
 D=A
 @SP
 AM=M+1
@@ -65,7 +65,7 @@ D=M
 M=D
 @Main.fibonacci
 0;JMP
-(Main.fibonacci$ret.1)
+(Sys.Main.fibonacci$ret.0)
 //label WHILE
 (WHILE$bar)
 //goto WHILE
